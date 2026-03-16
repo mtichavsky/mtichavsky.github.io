@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Shopify × Messenger.cz integrace | Automatické štítky pro váš e-shop</title>
+  <meta name="description" content="Propojte Shopify s Messenger.cz bez kompromisů. Při splnění objednávky se štítek vytvoří automaticky. Nastavení, podpora a provoz za ~150 Kč/měsíc." />
+  <meta name="author" content="Milan Tichavský" />
+  <link rel="canonical" href="https://milanticho.github.io/integrace-messenger/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Shopify × Messenger.cz integrace" />
+  <meta property="og:description" content="Automatické vytváření štítků při splnění objednávky. Žádná složitost, férová cena, živý člověk za tím." />
+  <meta property="og:url" content="https://milanticho.github.io/integrace-messenger/" />
+  <meta property="og:locale" content="cs_CZ" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Shopify × Messenger.cz integrace",
+    "description": "Automatické propojení Shopify e-shopu s kurýrní službou Messenger.cz. Při splnění objednávky se automaticky vytvoří přepravní štítek.",
+    "provider": {
+      "@type": "Person",
+      "name": "Milan Tichavský",
+      "email": "milantichavsky@seznam.cz",
+      "telephone": "+420730547703"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "CZK",
+      "price": "150",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "150",
+        "priceCurrency": "CZK",
+        "unitText": "měsíc"
+      }
+    },
+    "areaServed": "CZ"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f5f0;
+      --surface: #ffffff;
+      --ink: #1a1814;
+      --ink2: #5a564e;
+      --ink3: #9e9a91;
+      --accent: #e03d1e;
+      --accent-bg: #fdf1ee;
+      --rule: rgba(26,24,20,0.12);
+      --max: 760px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--rule);
+      padding: 1.25rem 0;
+      position: sticky;
+      top: 0;
+      background: rgba(247,245,240,0.92);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-cta {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1.5px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--rule);
+
+      opacity: 0;
+      transform: translateY(16px);
+      animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+    }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--ink2);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-pills {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .price-pill {
+      display: inline-flex;
+      align-items: center;
+      background: var(--accent-bg);
+      border: 1.5px solid rgba(224,61,30,0.2);
+      border-radius: 8px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #fff;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1.6rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-ghost {
+      font-size: 0.9rem;
+      color: var(--ink2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── Sections ── */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+
+    h2 em { font-style: italic; font-weight: 300; }
+
+    .section-intro {
+      color: var(--ink2);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── How it works ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 40px;
+      bottom: 40px;
+      width: 1px;
+      background: var(--rule);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      align-items: start;
+    }
+
+    .step-num {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid var(--rule);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink3);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .step-title {
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--ink2);
+      line-height: 1.6;
+    }
+
+    /* ── Honesty box ── */
+    .honesty-box {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+      margin-top: 1rem;
+    }
+
+    .honesty-box p + p { margin-top: 0.85rem; }
+
+    .honesty-box strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ── FAQ ── */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    details {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    details:first-child { border-top: 1px solid var(--rule); }
+
+    summary {
+      font-weight: 500;
+      font-size: 0.97rem;
+      padding: 1.1rem 0;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: '+';
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--ink3);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      font-size: 0.9rem;
+      color: var(--ink2);
+      line-height: 1.7;
+      padding-bottom: 1.1rem;
+    }
+
+    .faq-answer p + p { margin-top: 0.6rem; }
+
+    /* ── Contact ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 520px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-value {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .contact-value:hover { color: var(--accent); }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--ink3);
+      margin-top: 0.35rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--ink3);
+    }
+
+    footer a {
+      color: var(--ink3);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    /* ── Utilities ── */
+    .mt-sm { margin-top: 0.75rem; }
+    .mt-md { margin-top: 1.5rem; }
+
+    a { color: var(--accent); }
+
+    /* ── Stagger animations ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Shopify × Messenger.cz</p>
+      <h1>Propojení Shopify<br /><em>s Messenger.cz.</em></h1>
+      <p class="hero-sub">
+        Označíte objednávku jako splněnou v Shopify — štítek u kurýra Messenger.cz
+        se vytvoří sám. Napsal jsem na to aplikaci, kterou provozuju
+        i pro ostatní e-shopy.
+      </p>
+      <div class="hero-pills">
+        <div class="price-pill">~150 Kč / měsíc</div>
+        <div class="price-pill">Nastavení v ceně</div>
+        <div class="price-pill">Upravím na míru</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Mám zájem</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── How it works ── -->
+  <section id="jak-to-funguje">
+    <div class="wrap fade-in">
+      <h2>Jak to <em>funguje</em></h2>
+      <p class="section-intro">Celý proces proběhne na pozadí — vy nevidíte nic, kromě hotového štítku.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num active">1</div>
+          <div>
+            <p class="step-title">Označíte objednávku jako splněnou v Shopify</p>
+            <p class="step-desc">Stejně jako dosud. Nic navíc dělat nemusíte.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <p class="step-title">Aplikace zpracuje data objednávky</p>
+            <p class="step-desc">Převede informace do formátu, který Messenger.cz očekává. Pokud něco chybí, dohledá to z Shopify.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <p class="step-title">Štítek je vytvořen v Messenger.cz</p>
+            <p class="step-desc">V aplikaci Messenger.cz máte připravenou zásilku k tisku. To je celé.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section id="faq">
+    <div class="wrap fade-in">
+      <h2>Otázky & <em>odpovědi</em></h2>
+      <div class="faq-list mt-md">
+        <details>
+          <summary>Proč to není oficiální Shopify aplikace?</summary>
+          <div class="faq-answer">
+            <p>Napsal jsem si aplikaci sám pro bráchův e-shop <a href="https://euphorias.cz" target="_blank"
+                rel="noopener">euphorias.cz</a> a protože funguje, nabízím ji i ostatním. Shopify aplikace se mi momentálně nevyplatí, výsledek by byl funkčně stejný.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Můžu upravit, jak appka funguje?</summary>
+          <div class="faq-answer">
+            <p>Ano. Aktuálně se štítek vytváří při označení objednávky jako splněné, ale spouštění i předávaná data se dají změnit podle vašich potřeb.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Co ještě plánujete přidat?</summary>
+          <div class="faq-answer">
+            <p>Automatické propisování čísla zásilky zpátky do Shopify objednávky a odkaz na zásilku v Messenger.cz. Ještě jsem se k tomu nedostal, ale jde to udělat.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Mám přístup k datům mých zákazníků?</summary>
+          <div class="faq-answer">
+            <p>Data zákazníků prochází aplikací jen po dobu zpracování požadavku — nikam se neukládají. Aplikace běží
+            na Cloudflare Workers, takže žádné trvalé uchovávání dat neexistuje.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Jak dlouho trvá zprovoznění?</summary>
+          <div class="faq-answer">
+            <p>Krátká konzultace, nastavení webhooků v Shopify a nasazení — reálně hodiny. Záleží hlavně na
+            tom, kdy si zavoláme nebo si vyměníme e-maily.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="kontakt">
+    <div class="wrap fade-in">
+      <h2>Ozvěte se</h2>
+      <p class="section-intro">
+        Nejdřív si rád prodiskutuju váš případ — jaký e-shop, jaký objem,
+        co potřebujete posílat do Messengeru a pomůžu s nastavením.
+      </p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <p class="contact-label">E-mail</p>
+          <a class="contact-value" href="mailto:milantichavsky@seznam.cz">milantichavsky@seznam.cz</a>
+          <p class="contact-note">Odpovídám zpravidla do 24 hodin</p>
+        </div>
+        <div class="contact-card">
+          <p class="contact-label">Telefon</p>
+          <a class="contact-value" href="tel:+420730547703">+420 730 547 703</a>
+          <p class="contact-note">Napište nebo zavolejte</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="wrap">
+      <p>&copy; 2026 Milan Tichavský · IČO doplním, pokud budete potřebovat pro fakturaci</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
