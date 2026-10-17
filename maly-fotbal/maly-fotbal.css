@@ -109,3 +109,11 @@ details.mf-d[open] > summary::after { content: ' ▴'; transform: none; }
 .gl-avg span { position: absolute; left: 0; top: 8px; transform: translateX(-50%); padding: .4rem 1rem; border-radius: 10px; font-size: .72rem; font-weight: 600;
   letter-spacing: .06em; text-transform: uppercase; color: var(--ink2); background: rgba(255,255,255,.8); box-shadow: 0 4px 14px rgba(79,100,170,.15); white-space: nowrap; }
 @media (max-width: 560px) { .gl { padding-left: 8px; padding-right: 8px; } .gl-name { font-size: .64rem; padding: .3rem .55rem; } }
+
+/* compact page header */
+.mf-top { padding: 2rem 0 0; text-align: center; }
+.mf-top h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 .5rem; }
+.mf-top .back { display: inline-block; font-size: .85rem; margin-bottom: 1.25rem; text-decoration: none; color: var(--ink2); }
+.mf-top .back:hover { color: var(--accent); }
+.mf-top .meta { color: var(--ink2); font-size: .92rem; margin: 0; }
+.mf-top + section { padding-top: 2.5rem; }
