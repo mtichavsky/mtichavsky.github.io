@@ -50,7 +50,7 @@
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
-  <a href="../index.html" class="back-pill" id="backPill">Domů</a>
+  <nav><div class="wrap"><a href="../index.html" class="nav-logo">Milan Tichavský</a></div></nav>
 
   <!-- ── Hero ── -->
   <header class="hero">
@@ -181,12 +181,6 @@
   </footer>
 
   <script>
-    // Back pill — hide after scrolling down a bit
-    const pill = document.getElementById('backPill');
-    window.addEventListener('scroll', () => {
-      pill.classList.toggle('hidden', window.scrollY > 80);
-    }, { passive: true });
-
     // Scroll-triggered fade-in
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),
