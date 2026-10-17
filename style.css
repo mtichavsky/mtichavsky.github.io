@@ -1,21 +1,23 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #f7f5f0;
+  --bg: #f1f1f1;
   --surface: #ffffff;
-  --ink: #1a1814;
-  --ink2: #5a564e;
-  --ink3: #9e9a91;
-  --accent: #e03d1e;
-  --accent-bg: #fdf1ee;
-  --rule: rgba(26,24,20,0.12);
+  --ink: #1a3846;
+  --ink2: #4a6574;
+  --ink3: #8197a3;
+  --accent: #2f9e6b;
+  --accent-bg: #e6f3ec;
+  --blue: #4f8dce;
+  --rule: rgba(26,56,70,0.14);
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --max: 760px;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: var(--font);
   background: var(--bg);
   color: var(--ink);
   font-size: 17px;
@@ -36,7 +38,7 @@ nav {
   padding: 1.25rem 0;
   position: sticky;
   top: 0;
-  background: rgba(247,245,240,0.92);
+  background: rgba(241,241,241,0.92);
   backdrop-filter: blur(8px);
   z-index: 10;
 }
@@ -48,9 +50,9 @@ nav .wrap {
 }
 
 .nav-logo {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font);
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--ink);
   text-decoration: none;
@@ -127,7 +129,7 @@ section .wrap { text-align: center; }
 }
 
 h1 {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font);
   font-size: clamp(2.4rem, 5.5vw, 3.8rem);
   font-weight: 600;
   line-height: 1.08;
@@ -137,8 +139,9 @@ h1 {
 }
 
 h1 em {
-  font-style: italic;
-  font-weight: 300;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .hero-sub {
@@ -160,7 +163,7 @@ h1 em {
   display: inline-flex;
   align-items: center;
   background: var(--accent-bg);
-  border: 1.5px solid rgba(224,61,30,0.2);
+  border: 1.5px solid rgba(47,158,107,0.25);
   border-radius: 8px;
   padding: 0.45rem 0.9rem;
   font-size: 0.85rem;
@@ -176,7 +179,7 @@ h1 em {
 }
 
 .btn-primary {
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: var(--font);
   font-size: 0.9rem;
   font-weight: 500;
   color: #fff;
@@ -210,7 +213,7 @@ section {
 }
 
 h2 {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font);
   font-size: clamp(1.6rem, 3.5vw, 2.2rem);
   font-weight: 600;
   line-height: 1.15;
@@ -218,7 +221,7 @@ h2 {
   margin-bottom: 1rem;
 }
 
-h2 em { font-style: italic; font-weight: 300; }
+h2 em { font-style: normal; font-weight: 600; color: var(--accent); }
 
 .section-intro {
   color: var(--ink2);
@@ -464,4 +467,48 @@ a { color: var(--accent); }
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+
+/* ── Blog-style home: dated project list ── */
+.blog-intro { padding: 4.5rem 0 2.5rem; }
+.blog-intro h1 { margin-bottom: 0.75rem; }
+.blog-intro p { color: var(--ink2); font-size: 1.1rem; max-width: 520px; }
+
+.feed { list-style: none; display: flex; flex-direction: column; gap: 2.5rem; padding-bottom: 5rem; }
+
+.feed time {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.7rem;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 0.9rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.entry:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(26,56,70,0.09); }
+.entry .thumb svg { display: block; width: 100%; height: auto; border-radius: 14px; }
+.entry .tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); }
+.entry h2 { font-size: 1.4rem; margin: 0.3rem 0 0.4rem; }
+.entry p { color: var(--ink2); font-size: 0.95rem; line-height: 1.55; }
+.entry .more { display: inline-block; margin-top: 0.7rem; font-size: 0.9rem; font-weight: 600; color: var(--accent); }
+
+@media (max-width: 600px) {
+  .entry { grid-template-columns: 1fr; gap: 1rem; padding: 0.8rem 0.8rem 1.2rem; }
+  .entry .body { padding: 0 0.4rem; }
 }
