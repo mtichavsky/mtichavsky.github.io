@@ -166,16 +166,6 @@ def ratings_table(fit, ids, names):
         "Útok nad 1 a obdržené góly pod 1 jsou dobré. Opory = šest hráčů týmu s nejvíc starty.</p>")
 
 
-def regulars_block(fc, ids, names, order):
-    core_ids, apps, games, pnames = fc["core"]
-    out = ""
-    for k in order:
-        tid = ids[k]
-        players = ", ".join(f"{escape(pnames[p])} <span>{apps[tid][p]}/{games[tid]}</span>" for p in core_ids[tid])
-        out += f"<p><b>{escape(names[tid])}</b>{players}</p>"
-    return f"<div class=regulars>{out}</div><p class=note>V závorce: starty / odehrané zápasy týmu.</p>"
-
-
 def render_forecast(matches, ids, names, fc):
     order = np.argsort(-fc["exp_points"])
     total, played = len(matches), sum(m["hg"] is not None for m in matches)
@@ -282,8 +272,6 @@ Nižší hodnoty jsou lepší.</p>
 <li>Zranění, tresty a dovolené, tedy kdo bude k dispozici konkrétní den.</li>
 <li>Dlouhodobý vývoj. Po několika kolech je dat zatím velmi málo.</li></ul>
 
-<h2 class="title">Opory týmů</h2>
-{regulars_block(fc, ids, names, sorted(range(len(ids)), key=lambda k: -fc["exp_points"][k]))}
 <p class="note" style="margin-top:2.5rem"><a href="../">← Zpět na předpověď</a></p>
 </div>"""
 

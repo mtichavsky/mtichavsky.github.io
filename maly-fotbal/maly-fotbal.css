@@ -56,9 +56,6 @@ details.mf-d[open] > summary::after { content: ' ▴'; transform: none; }
 .fx .pr b { font-weight: 600; color: var(--ink); }
 .fx .meta { font-size: .76rem; color: var(--ink3); margin-top: .65rem; text-align: center; }
 
-.regulars { text-align: left; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: .9rem 1.75rem; font-size: .9rem; }
-.regulars p b { display: block; font-weight: 600; }
-.regulars span { color: var(--ink3); }
 
 /* model page */
 .prose h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); margin-bottom: .75rem; }
