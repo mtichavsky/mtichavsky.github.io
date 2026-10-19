@@ -46,16 +46,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
-  <a href="../index.html" class="back-pill" id="backPill">Domů</a>
+  <nav><div class="wrap"><a href="../index.html" class="nav-logo">Milan Tichavský</a></div></nav>
 
   <!-- ── Hero ── -->
   <header class="hero">
     <div class="wrap">
-      <p class="eyebrow">Shopify × Messenger.cz</p>
       <h1>Propojení Shopify<br /><em>s Messenger.cz.</em></h1>
       <p class="hero-sub">
         Označíte objednávku jako splněnou v Shopify — štítek u kurýra Messenger.cz
@@ -181,12 +180,6 @@
   </footer>
 
   <script>
-    // Back pill — hide after scrolling down a bit
-    const pill = document.getElementById('backPill');
-    window.addEventListener('scroll', () => {
-      pill.classList.toggle('hidden', window.scrollY > 80);
-    }, { passive: true });
-
     // Scroll-triggered fade-in
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),

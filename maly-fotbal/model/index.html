@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jak funguje model · Predikce malého fotbalu · Milan Tichavský</title>
+  <meta name="description" content="Stručné vysvětlení modelu pro předpověď malého fotbalu v Brně: minulé sezóny, gólový model a simulace." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../style.css" />
+  <link rel="stylesheet" href="../../maly-fotbal/maly-fotbal.css" />
+</head>
+<body>
+  <nav><div class="wrap"><a href="../../index.html" class="nav-logo">Milan Tichavský</a></div></nav>
+  <main>
+    <header class="mf-top"><div class="wide"><a class=back href="../index.html">← Předpověď</a><h1>Jak model funguje</h1><p class="meta">Z letošních výsledků a minulých sezón odhadne sílu týmů a odsimuluje zbytek sezóny.</p></div></header><section><div class="wide"><div class="prose">
+<h2 class="title">Data</h2>
+<p>Výsledky a soupisky (kdo v kterém zápase nastoupil) se stahují z webu <strong>malyfotbalbrno.cz</strong>,
+a to nejen pro letošní 6. ligu, ale i pro 5 předchozích sezón všech mužských lig od 1. do 7.
+Stránka se jednou týdně vygeneruje znovu a odhady se přepočítají.</p>
+
+<h2 class="title">Výchozí odhad z minulých sezón</h2>
+<p>Na začátku sezóny o týmech letos nic nevíme, ale víme, jak hrály loni. Z týmů, které postoupily nebo sestoupily,
+model odhadl, že sousední ligy se liší asi o <strong>10 %</strong> gólů.
+Loňská síla se navíc přenáší jen částečně (asi z 45 %): týmy se mezi sezónami
+mění. Nové týmy dostanou průměr, jakého nové týmy v minulosti dosahovaly.</p>
+<p>Jak sezóna běží, výchozí odhad bere čím dál víc v úvahu i to, <strong>kdo za tým skutečně hraje</strong>:
+u každého hráče, jak silný byl loni jeho tým, i ve vyšší lize. Tým poskládaný z hráčů první ligy tak začne výš,
+i když je v soutěži nový.</p>
+
+<h2 class="title">Model gólů</h2>
+<div class="formula">očekávané góly = základ × útok týmu × obrana soupeře × domácí prostředí</div>
+<div class="facts">
+<div class="fact"><b>−1 %</b><span>góly za domácí prostředí</span></div>
+<div class="fact"><b>10 %</b><span>rozdíl gólů mezi sousedními ligami</span></div>
+<div class="fact"><b>243</b><span>přechodů týmů mezi sezónami v datech</span></div></div>
+<p>Síla týmů se odhaduje z letošních zápasů, ale <strong>stahuje se k výchozímu odhadu</strong> (ridge regrese).
+Po pár kolech tak rozhoduje hlavně historie, ke konci sezóny hlavně letošní výsledky.</p>
+<p>Góly v malém fotbale kolísají zhruba dvakrát víc, než předpokládá obvyklé Poissonovo rozdělení
+(malé kádry, střídání sestav). Model proto používá <strong>negativně binomické rozdělení</strong> se stejným průměrem.
+S Poissonem byl model příliš sebejistý: když favoritovi dával 90 %, vyhrál jen asi v 80 % případů.</p>
+
+<h2 class="title">Simulace sezóny</h2>
+<p>Zbývající zápasy podle skutečného rozpisu odsimuluji <strong>6 000 krát</strong>.
+Aby se do pořadí přenesla i nejistota v odhadu síly týmů, model se 150krát přepočítá na náhodně vybraných
+odehraných zápasech (bootstrap). Z výsledků plynou pravděpodobnosti postupu a sestupu.</p>
+<p>Do postupu a sestupu počítám i baráž. Protože nemám data z minulých baráží, jsou její šance jen
+odhad: 40 % pro postupující tým a 55 % pro záchranu.</p>
+
+<h2 class="title">Funguje to?</h2>
+<p>Model jsem vyzkoušel na minulých sezónách 4. až 7. ligy: každý zápas předpověděl jen z toho, co se odehrálo
+dříve. Nastavení jsem ladil na sezónách 2022/23 a 2023/24 a ověřil na 913 zápasech let 2024/25 až 2026/27,
+které ladění nikdy neviděly. Log-loss (nižší je lepší): tento model 0,874, původní verze
+0,897, prosté sazby výhra/remíza/prohra 0,967.</p>
+<p>Letošní sezóna stejným způsobem (38 zápasů):</p>
+<div class="mf-card mini"><table class="mf">
+<tr><th class=l>Model<th>Log-loss<th>Brier<th>Trefený výsledek</tr>
+<tr><td class=l>Tento model<td>0,814<td>0,482<td>63 %</tr>
+<tr><td class=l>Totéž bez minulých sezón<td>0,810<td>0,479<td>66 %</tr>
+<tr><td class=l>Základ: průměrné sazby lig<td>0,891<td>0,558<td>39 %</tr></table></div>
+<div class="callout">Model je výrazně lepší než prosté sazby výhra/remíza/prohra. Letos zatím minulé sezóny měřitelně nepomáhají, ale letošních zápasů je na takové srovnání málo; v minulých sezónách pomáhaly hlavně v prvních kolech. Vzorek je malý, takže pořadí berte jako kvalifikovaný odhad, ne jistotu.</div>
+
+<h2 class="title">Co model neumí</h2>
+<ul class="limits">
+<li>Kdo na zápas přijde. Počet hráčů a účast opor jsem zkoušel, ale předpovědi nezlepšily: dopředu se odhadnout
+nedají a vliv je malý (asi +0,2 gólu za každého hráče navíc).</li>
+<li>Kvalitu jednotlivých hráčů. Hráč je ohodnocen jen podle toho, jak silný byl loni jeho tým.</li>
+<li>Zranění, tresty a dovolené.</li>
+<li>Vývoj během sezóny. Rozsahy bodů jsou proto spíš užší, než by měly být: v minulých sezónách se do
+80 % rozsahu vešly jen asi dvě třetiny týmů.</li></ul>
+
+<p class="note" style="margin-top:2.5rem"><a href="../index.html">← Zpět na předpověď</a></p>
+</div></div></section>
+  </main>
+  <footer><div class="wrap"><p>&copy; 2026 Milan Tichavský</p></div></footer>
+</body>
+</html>

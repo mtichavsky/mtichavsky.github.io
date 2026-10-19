@@ -1,22 +1,14 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Milan Tichavský</title>
-  <meta name="description" content="Osobní stránka Milana Tichavského." />
-
+  <title>Milan Tichavský · Projects</title>
+  <meta name="description" content="Projects by Milan Tichavský, newest first." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    nav .wrap { display: block; text-align: center; }
-    .nav-logo { font-size: 1.25rem; color: var(--ink); }
-    @media (min-width: 768px) {
-      .hero-actions { justify-content: center; margin-left: 2.5rem; }
-    }
-  </style>
 </head>
 <body>
   <nav>
@@ -25,19 +17,74 @@
     </div>
   </nav>
 
-  <header class="hero">
-    <div class="wrap">
-      <p class="eyebrow">Ahoj, světe</p>
-      <h1>Tohle je<br /><em>zatím jen začátek.</em></h1>
-      <p class="hero-sub">
-        Stránka teprve vzniká. Zatím tady najdete jen jeden projekt —
-        integraci Shopify s kurýrem Messenger.cz.
-      </p>
-      <div class="hero-actions">
-        <a href="integrace-messenger/index.html" class="btn-primary">Shopify × Messenger.cz</a>
-      </div>
-    </div>
-  </header>
+  <main class="wrap">
+    <header class="blog-intro">
+      <h1>Projects</h1>
+      <p>Things I've built, newest first.</p>
+    </header>
+
+    <ol class="feed">
+      <li>
+        <time datetime="2026-10-17">October 17, 2026</time>
+        <a class="entry" href="maly-fotbal/index.html">
+          <div class="thumb">
+            <svg viewBox="0 0 320 180" role="img" aria-label="Chart of expected final points per team">
+              <rect width="320" height="180" fill="#dbe8f2"/>
+              <g stroke="#1a3846" stroke-opacity=".18" stroke-width="2">
+                <line x1="44" y1="30" x2="296" y2="30"/><line x1="44" y1="54" x2="296" y2="54"/>
+                <line x1="44" y1="78" x2="296" y2="78"/><line x1="44" y1="102" x2="296" y2="102"/>
+                <line x1="44" y1="126" x2="296" y2="126"/><line x1="44" y1="150" x2="296" y2="150"/>
+              </g>
+              <g fill="#1a3846" fill-opacity=".22">
+                <rect x="178" y="25" width="84" height="10" rx="5"/><rect x="164" y="49" width="84" height="10" rx="5"/>
+                <rect x="136" y="73" width="72" height="10" rx="5"/><rect x="118" y="97" width="72" height="10" rx="5"/>
+                <rect x="92" y="121" width="70" height="10" rx="5"/><rect x="66" y="145" width="64" height="10" rx="5"/>
+              </g>
+              <g fill="#1a3846" stroke="#dbe8f2" stroke-width="3">
+                <circle cx="222" cy="30" r="7"/><circle cx="208" cy="54" r="7"/><circle cx="172" cy="78" r="7"/>
+                <circle cx="154" cy="102" r="7"/><circle cx="128" cy="126" r="7"/><circle cx="100" cy="150" r="7"/>
+              </g>
+              <g>
+                <rect x="16" y="24" width="12" height="12" rx="3" fill="#2f9e6b"/><rect x="16" y="48" width="12" height="12" rx="3" fill="#2f9e6b"/>
+                <rect x="16" y="72" width="12" height="12" rx="3" fill="#2f9e6b"/><rect x="16" y="96" width="12" height="12" rx="3" fill="#e0b84a"/>
+                <rect x="16" y="120" width="12" height="12" rx="3" fill="#8197a3"/><rect x="16" y="144" width="12" height="12" rx="3" fill="#e07a6b"/>
+              </g>
+            </svg>
+          </div>
+          <div class="body">
+            <span class="tag">Data · Model · in Czech</span>
+            <h2>Small football predictions</h2>
+            <p>Who gets promoted and who gets relegated in Brno's 6th league? A model that looks not just at results but at who actually showed up. Updated weekly.</p>
+            <span class="more">Open the forecast →</span>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <time datetime="2026-03-16">March 16, 2026</time>
+        <a class="entry" href="integrace-messenger/index.html">
+          <div class="thumb">
+            <svg viewBox="0 0 320 180" role="img" aria-label="Shopify connected to the Messenger.cz courier">
+              <rect width="320" height="180" fill="#dbe8f2"/>
+              <rect x="26" y="62" width="64" height="56" rx="14" fill="#fff" stroke="#1a3846" stroke-width="3"/>
+              <path d="M46 84h24l-3 20H49z" fill="#2f9e6b"/><path d="M53 84v-5a5 5 0 0 1 10 0v5" fill="none" stroke="#1a3846" stroke-width="3" stroke-linecap="round"/>
+              <rect x="230" y="62" width="64" height="56" rx="14" fill="#fff" stroke="#1a3846" stroke-width="3"/>
+              <path d="M246 100V86l16-8 16 8v14l-16 8z" fill="none" stroke="#1a3846" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M246 86l16 8 16-8M262 94v14" fill="none" stroke="#1a3846" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M104 90h104" stroke="#4f8dce" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"/>
+              <path d="M200 80l14 10-14 10" fill="none" stroke="#4f8dce" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="body">
+            <span class="tag">E-commerce · in Czech</span>
+            <h2>Shopify × Messenger.cz</h2>
+            <p>Integration of Shopify with the Messenger.cz courier service.</p>
+            <span class="more">Read more →</span>
+          </div>
+        </a>
+      </li>
+    </ol>
+  </main>
 
   <footer>
     <div class="wrap">
