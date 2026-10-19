@@ -3,13 +3,13 @@
 :root {
   --bg: #f1f1f1;
   --surface: #ffffff;
-  --ink: #1a3846;
-  --ink2: #4a6574;
-  --ink3: #8197a3;
+  --ink: #111111;
+  --ink2: #4a4a4a;
+  --ink3: #8a8a8a;
   --accent: #2f9e6b;
   --accent-bg: #e6f3ec;
   --blue: #4f8dce;
-  --rule: rgba(26,56,70,0.14);
+  --rule: rgba(0,0,0,0.12);
   --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --max: 760px;
 }
@@ -471,9 +471,8 @@ a { color: var(--accent); }
 
 
 /* ── Blog-style home: dated project list ── */
-.blog-intro { padding: 4.5rem 0 2.5rem; }
-.blog-intro h1 { margin-bottom: 0.75rem; }
-.blog-intro p { color: var(--ink2); font-size: 1.1rem; max-width: 520px; }
+.blog-intro { padding: 2rem 0 1.75rem; }
+.blog-intro h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 500; margin-bottom: 0.9rem; }
 
 .feed { list-style: none; display: flex; flex-direction: column; gap: 2.5rem; padding-bottom: 5rem; }
 
@@ -483,32 +482,27 @@ a { color: var(--accent); }
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink3);
+  color: var(--ink);
   margin-bottom: 0.7rem;
 }
 
 .entry {
   display: grid;
-  grid-template-columns: 210px 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 1.5rem;
   align-items: center;
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: 20px;
-  padding: 0.9rem;
   color: var(--ink);
   text-decoration: none;
-  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.entry:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(26,56,70,0.09); }
-.entry .thumb svg { display: block; width: 100%; height: auto; border-radius: 14px; }
+.entry .thumb svg { display: block; width: 100%; height: auto; border-radius: 14px; transition: transform 0.2s; }
+.entry:hover .thumb svg { transform: translateY(-2px); }
+.entry:hover h2 { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
 .entry .tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); }
 .entry h2 { font-size: 1.4rem; margin: 0.3rem 0 0.4rem; }
 .entry p { color: var(--ink2); font-size: 0.95rem; line-height: 1.55; }
 .entry .more { display: inline-block; margin-top: 0.7rem; font-size: 0.9rem; font-weight: 600; color: var(--accent); }
 
 @media (max-width: 600px) {
-  .entry { grid-template-columns: 1fr; gap: 1rem; padding: 0.8rem 0.8rem 1.2rem; }
-  .entry .body { padding: 0 0.4rem; }
+  .entry { grid-template-columns: 1fr; gap: 1rem; }
 }
