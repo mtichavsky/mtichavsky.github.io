@@ -1,0 +1,34 @@
+{# The one definition of the site's shell: head, top bar and footer. Every page except the
+   EEG app (eeg/, which has its own app bar) extends this. `root` is the relative path from the
+   output page to the site root, so links work on GitHub Pages and when opened from disk. #}
+<!DOCTYPE html>
+<html lang="{% block lang %}en{% endblock %}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% endblock %}" />
+{% block head %}{% endblock %}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="{{ fonts }}" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ root }}style.css" />
+{% block styles %}{% endblock %}
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a href="{{ root }}index.html" class="nav-logo">Milan Tichavský</a>
+    </div>
+  </nav>
+
+{% block body %}{% endblock %}
+
+  <footer>
+    <div class="wrap">
+      <p>&copy; 2026 Milan Tichavský{% block footer_note %}{% endblock %}</p>
+    </div>
+  </footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>
