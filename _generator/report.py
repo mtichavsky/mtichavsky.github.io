@@ -5,6 +5,8 @@ from math import exp
 
 import numpy as np
 
+import site_shell as shell
+
 # Held-out check over earlier seasons (leagues 4-7, seasons 2024/25-2026/27, every match predicted
 # only from earlier days). Computed once by research/; log-loss, lower is better.
 HISTORY_CHECK = {"n": 913, "old": 0.897, "new": 0.874, "base": 0.967}
@@ -16,7 +18,6 @@ P_STAY_UP_PLAYOFF = 0.55
 
 NBSP = " "
 WEEKDAYS = ["po", "út", "st", "čt", "pá", "so", "ne"]
-FONTS = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
 
 
 def cz(x, digits=1, signed=False):
@@ -34,29 +35,9 @@ def when(ts):
 
 
 def page(title, description, body, root):
-    """Shared shell using the site's style.css. `root` is the relative path to the site root."""
-    return f"""<!DOCTYPE html>
-<html lang="cs">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{escape(title)}</title>
-  <meta name="description" content="{escape(description)}" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="{FONTS}" rel="stylesheet" />
-  <link rel="stylesheet" href="{root}style.css" />
-  <link rel="stylesheet" href="{root}maly-fotbal/maly-fotbal.css" />
-</head>
-<body>
-  <nav><div class="wrap"><a href="{root}index.html" class="nav-logo">Milan Tichavský</a></div></nav>
-  <main>
-{body}
-  </main>
-  <footer><div class="wrap"><p>&copy; 2026 Milan Tichavský</p></div></footer>
-</body>
-</html>
-"""
+    """Wrap `body` in the site's shared shell (templates/base.html). `root` is the path to the site root."""
+    return shell.env.get_template("maly-fotbal.html").render(
+        title=title, description=description, body=body, root=root, fonts=shell.FONTS)
 
 
 def hero(kicker, h1, sub, tab, root):

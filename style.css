@@ -10,7 +10,7 @@
   --accent-bg: #e6f3ec;
   --blue: #4f8dce;
   --rule: rgba(0,0,0,0.12);
-  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: 'Charis SIL', Charis, Georgia, 'Times New Roman', serif;
   --max: 760px;
 }
 
@@ -35,7 +35,7 @@ body {
 /* ── Nav ── */
 nav {
   border-bottom: 1px solid var(--rule);
-  padding: 1.25rem 0;
+  padding: 0.85rem 0;
   position: sticky;
   top: 0;
   background: rgba(241,241,241,0.92);
@@ -51,9 +51,8 @@ nav .wrap {
 
 .nav-logo {
   font-family: var(--font);
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  letter-spacing: -0.01em;
   color: var(--ink);
   text-decoration: none;
 }
@@ -472,7 +471,7 @@ a { color: var(--accent); }
 
 /* ── Blog-style home: dated project list ── */
 .blog-intro { padding: 2rem 0 1.75rem; }
-.blog-intro h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 500; margin-bottom: 0.9rem; }
+.blog-intro h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 500; font-style: italic; margin-bottom: 0.9rem; }
 
 .feed { list-style: none; display: flex; flex-direction: column; gap: 2.5rem; padding-bottom: 5rem; }
 
@@ -495,8 +494,8 @@ a { color: var(--accent); }
   text-decoration: none;
 }
 
-.entry .thumb svg { display: block; width: 100%; height: auto; border-radius: 14px; transition: transform 0.2s; }
-.entry:hover .thumb svg { transform: translateY(-2px); }
+.entry .thumb svg, .entry .thumb img { display: block; width: 100%; height: auto; border-radius: 14px; transition: transform 0.2s; }
+.entry:hover .thumb svg, .entry:hover .thumb img { transform: translateY(-2px); }
 .entry:hover h2 { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
 .entry .tag { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); }
 .entry h2 { font-size: 1.4rem; margin: 0.3rem 0 0.4rem; }

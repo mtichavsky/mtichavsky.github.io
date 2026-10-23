@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block lang %}cs{% endblock %}
+{% block title %}Shopify × Messenger.cz integrace | Automatické štítky pro váš e-shop{% endblock %}
+{% block description %}Propojte Shopify s Messenger.cz bez kompromisů. Při splnění objednávky se štítek vytvoří automaticky. Nastavení, podpora a provoz za ~150 Kč/měsíc.{% endblock %}
+{% block head %}
+  <meta name="author" content="Milan Tichavský" />
+  <link rel="canonical" href="https://milanticho.github.io/integrace-messenger/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Shopify × Messenger.cz integrace" />
+  <meta property="og:description" content="Automatické vytváření štítků při splnění objednávky. Žádná složitost, férová cena, živý člověk za tím." />
+  <meta property="og:url" content="https://milanticho.github.io/integrace-messenger/" />
+  <meta property="og:locale" content="cs_CZ" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Shopify × Messenger.cz integrace",
+    "description": "Automatické propojení Shopify e-shopu s kurýrní službou Messenger.cz. Při splnění objednávky se automaticky vytvoří přepravní štítek.",
+    "provider": {
+      "@type": "Person",
+      "name": "Milan Tichavský",
+      "email": "milantichavsky@seznam.cz",
+      "telephone": "+420730547703"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "CZK",
+      "price": "150",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "150",
+        "priceCurrency": "CZK",
+        "unitText": "měsíc"
+      }
+    },
+    "areaServed": "CZ"
+  }
+  </script>
+{% endblock %}
+{% block body %}
+  <!-- ── Hero ── -->
+  <header class="hero">
+    <div class="wrap">
+      <h1>Propojení Shopify<br /><em>s Messenger.cz.</em></h1>
+      <p class="hero-sub">
+        Označíte objednávku jako splněnou v Shopify — štítek u kurýra Messenger.cz
+        se vytvoří sám. Napsal jsem na to aplikaci, kterou provozuju
+        i pro ostatní e-shopy.
+      </p>
+      <div class="hero-pills">
+        <div class="price-pill">~150 Kč / měsíc</div>
+        <div class="price-pill">Nastavení v ceně</div>
+        <div class="price-pill">Upravím na míru</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">Mám zájem</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── How it works ── -->
+  <section id="jak-to-funguje">
+    <div class="wrap fade-in">
+      <h2>Jak to <em>funguje</em></h2>
+      <p class="section-intro">Celý proces proběhne na pozadí — vy nevidíte nic, kromě hotového štítku.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num active">1</div>
+          <div>
+            <p class="step-title">Označíte objednávku jako splněnou v Shopify</p>
+            <p class="step-desc">Stejně jako dosud. Nic navíc dělat nemusíte.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <p class="step-title">Aplikace zpracuje data objednávky</p>
+            <p class="step-desc">Převede informace do formátu, který Messenger.cz očekává. Pokud něco chybí, dohledá to z Shopify.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <p class="step-title">Štítek je vytvořen v Messenger.cz</p>
+            <p class="step-desc">V aplikaci Messenger.cz máte připravenou zásilku k tisku. To je celé.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section id="faq">
+    <div class="wrap fade-in">
+      <h2>Otázky & <em>odpovědi</em></h2>
+      <div class="faq-list mt-md">
+        <details>
+          <summary>Proč to není oficiální Shopify aplikace?</summary>
+          <div class="faq-answer">
+            <p>Napsal jsem si aplikaci sám pro bráchův e-shop <a href="https://euphorias.cz" target="_blank"
+                rel="noopener">euphorias.cz</a> a protože funguje, nabízím ji i ostatním. Shopify aplikace se mi momentálně nevyplatí, výsledek by byl funkčně stejný.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Můžu upravit, jak appka funguje?</summary>
+          <div class="faq-answer">
+            <p>Ano. Aktuálně se štítek vytváří při označení objednávky jako splněné, ale spouštění i předávaná data se dají změnit podle vašich potřeb.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Co ještě plánujete přidat?</summary>
+          <div class="faq-answer">
+            <p>Automatické propisování čísla zásilky zpátky do Shopify objednávky a odkaz na zásilku v Messenger.cz. Ještě jsem se k tomu nedostal, ale jde to udělat.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Mám přístup k datům mých zákazníků?</summary>
+          <div class="faq-answer">
+            <p>Data zákazníků prochází aplikací jen po dobu zpracování požadavku — nikam se neukládají. Aplikace běží
+            na Cloudflare Workers, takže žádné trvalé uchovávání dat neexistuje.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Jak dlouho trvá zprovoznění?</summary>
+          <div class="faq-answer">
+            <p>Krátká konzultace, nastavení webhooků v Shopify a nasazení — reálně hodiny. Záleží hlavně na
+            tom, kdy si zavoláme nebo si vyměníme e-maily.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ── -->
+  <section id="kontakt">
+    <div class="wrap fade-in">
+      <h2>Ozvěte se</h2>
+      <p class="section-intro">
+        Nejdřív si rád prodiskutuju váš případ — jaký e-shop, jaký objem,
+        co potřebujete posílat do Messengeru a pomůžu s nastavením.
+      </p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <p class="contact-label">E-mail</p>
+          <a class="contact-value" href="mailto:milantichavsky@seznam.cz">milantichavsky@seznam.cz</a>
+          <p class="contact-note">Odpovídám zpravidla do 24 hodin</p>
+        </div>
+        <div class="contact-card">
+          <p class="contact-label">Telefon</p>
+          <a class="contact-value" href="tel:+420730547703">+420 730 547 703</a>
+          <p class="contact-note">Napište nebo zavolejte</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block footer_note %} · IČO doplním, pokud budete potřebovat pro fakturaci{% endblock %}
+{% block scripts %}
+
+  <script>
+    // Scroll-triggered fade-in
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  </script>
+{% endblock %}

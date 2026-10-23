@@ -18,3 +18,12 @@ Everything committed here is public, including git history.
 - `_generator/run.py` regenerates `maly-fotbal/`. It does not commit; the user reviews and pushes.
 - Internal links point to files (`maly-fotbal/index.html`), not directories, so the site also
   works when opened locally from disk.
+
+## Shared page shell (Jinja templates)
+
+- `_generator/templates/base.html` is the one definition of the head, top bar and footer. Change
+  them there, never in the generated HTML.
+- Hand-written pages live in `_generator/templates/pages/` (e.g. `pages/index.html` -> `index.html`).
+  Edit the template, then run `python _generator/build.py` to rewrite the published HTML. It also
+  re-wraps the existing `maly-fotbal/` pages in the current shell without refetching data.
+- `eeg/` is a standalone app with its own app bar and is not built from these templates.
