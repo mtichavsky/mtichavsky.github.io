@@ -59,7 +59,8 @@ def top(h1, meta, back=''):
 
 
 def section(title, content):
-    return f'<section><div class="wide"><div class="mf-head"><h2 class="title">{title}</h2></div>{content}</div></section>'
+    head = f'<div class="mf-head"><h2 class="title">{title}</h2></div>' if title else ""
+    return f'<section><div class="wide">{head}{content}</div></section>'
 
 
 def fixture_cards(fixtures):
@@ -99,16 +100,16 @@ def standings_table(fc, ids, names, order):
         rows += (
             f"<tr class='{zone(rank)}'><td class=rk>{rank + 1}<td class='l team'>{escape(names[ids[k]])}"
             f"<td class='hide-s dim'>{table[k, 0]}<td class=hide-s>{table[k, 6]}"
-            f"<td class=l><span class=range title='80 % simulací skončí mezi {fc['q10'][k]:.0f} a {fc['q90'][k]:.0f} body'>"
+            f"<td class='l pts'><div class=pts-in><span class=range title='80 % simulací skončí mezi {fc['q10'][k]:.0f} a {fc['q90'][k]:.0f} body'>"
             f"<span class=track></span><span class=span style='left:{pos(fc['q10'][k]):.1f}%;"
             f"width:{pos(fc['q90'][k]) - pos(fc['q10'][k]):.1f}%'></span>"
             f"<span class=dot style='left:{pos(fc['exp_points'][k]):.1f}%'></span></span>"
-            f"<span class=strong>{fc['exp_points'][k]:.0f}</span>"
+            f"<span class=strong>{fc['exp_points'][k]:.0f}</span></div>"
             f"<td class=hide-s>{pct(d[0])}<td class=strong>{pct(promoted)}<td class=strong>{pct(relegated)}</tr>"
         )
     return (
         "<div class=mf-card><div class=mf-scroll><table class=mf>"
-        "<tr><th>#<th class=l>Tým<th class=hide-s>Z<th class=hide-s>B<th class=l>Konečné body<th class=hide-s>Vítěz ligy<th>Postup<th>Sestup</tr>"
+        "<tr><th>#<th class=l>Tým<th class=hide-s>Z<th class=hide-s>B<th class='l pts'>Konečné body<th class=hide-s>Vítěz ligy<th>Postup<th>Sestup</tr>"
         f"{rows}</table></div></div>"
         "<div class=legend>"
         "<span><i style='background:#bfe0c8'></i>přímý postup do 5. ligy (1.–4.)</span>"
@@ -168,7 +169,7 @@ def render_forecast(matches, ids, names, fc):
         "Predikce 6. ligy malého fotbalu",
         f"Odehráno {played} ze {total} zápasů · aktualizováno {now.day}. {now.month}. {now.year} · "
         '<a href="model/index.html">Jak model funguje</a>')
-    body += section("Předpokládané konečné pořadí", standings_table(fc, ids, names, order))
+    body += section(None, standings_table(fc, ids, names, order))
     body += section("Pravděpodobnost jednotlivých pozic", heatmap(fc, ids, names, order))
     body += section(
         "Nejbližší zápasy", fixture_cards(near) + legend +
