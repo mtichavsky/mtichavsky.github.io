@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>In-ear EEG classifier</title>
+  <meta name="description" content="Classify an in-ear EEG recording with a neural network that runs entirely in your browser. Your file never leaves your device." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="eeg.css" />
+</head>
+<body class="app">
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2-6 3 12 3-9 2 3h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      In-ear EEG classifier
+    </a>
+    <span class="local" title="The model runs in this browser tab. Nothing is uploaded.">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      Runs on your device
+    </span>
+    <nav class="topnav">
+      <a href="about.html">How it works</a>
+      <a href="../index.html">Milan Tichavský</a>
+    </nav>
+  </header>
+
+  <main class="workspace">
+    <section class="pane input" aria-labelledby="input-h">
+      <h2 id="input-h" class="pane-title">Recording</h2>
+
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept=".csv,text/csv" />
+        <svg class="drop-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="drop-main">Drop an IDUN CSV here</span>
+        <span class="drop-sub">or <u>choose a file</u></span>
+      </label>
+
+      <dl class="file" id="file-card" hidden>
+        <div class="file-name"><dt>File</dt><dd id="f-name"></dd></div>
+        <div><dt>Length</dt><dd id="f-length"></dd></div>
+        <div><dt>Sample rate</dt><dd id="f-rate"></dd></div>
+        <div><dt>Segments</dt><dd id="f-segments"></dd></div>
+      </dl>
+
+      <p class="hint">Needs a <code>ch1</code> column sampled at 250 Hz and at least 10 seconds of signal.</p>
+      <button type="button" class="btn-secondary" id="sample">Try a synthetic sample</button>
+
+      <div class="model-card">
+        <p class="model-name">CNN-AttnS <span>binary</span></p>
+        <p>The best in-ear model from my master's thesis and paper. This page runs fold 5 of its 10-fold cross-validation, which classified 79.5% of held-out segments correctly (paper average: 77.0%).</p>
+        <a href="about.html#model">Why this model, and how it was tested</a>
+      </div>
+    </section>
+
+    <section class="pane output" aria-labelledby="output-h">
+      <h2 id="output-h" class="pane-title">Analysis</h2>
+
+      <div class="state empty" id="empty">
+        <div class="ghost-spec" aria-hidden="true"></div>
+        <p>Results appear here once you add a recording.</p>
+      </div>
+
+      <div class="state running" id="running" hidden>
+        <ol class="steps" aria-live="polite">
+          <li data-step="0">Filtering the signal</li>
+          <li data-step="1">Loading the model</li>
+          <li data-step="2">Classifying segments</li>
+        </ol>
+      </div>
+
+      <div class="state failed" id="failed" role="alert" hidden>
+        <p class="failed-title">Couldn't analyse this file</p>
+        <p id="error"></p>
+      </div>
+
+      <div class="state result" id="result" hidden>
+        <div class="verdict-row">
+          <div>
+            <p class="verdict-label">Model output</p>
+            <p class="verdict" id="verdict-name"></p>
+          </div>
+          <ul class="share" id="bars"></ul>
+        </div>
+        <p class="verdict-sub" id="verdict-sub"></p>
+
+        <figure class="viz">
+          <div class="spec">
+            <div class="spec-axis" aria-hidden="true"><span>70 Hz</span><span>35</span><span>0</span></div>
+            <canvas id="spec" aria-label="Spectrogram of the recording, 0 to 70 hertz, over time"></canvas>
+          </div>
+          <ol class="segments" id="strip" aria-label="Prediction for each 10-second segment"></ol>
+          <div class="time-axis" aria-hidden="true"><span>0 s</span><span id="t-end"></span></div>
+          <figcaption id="spec-note"></figcaption>
+        </figure>
+
+        <p class="disclaimer">Research prototype, not a diagnosis. <a href="about.html#limits">Read the limits</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
