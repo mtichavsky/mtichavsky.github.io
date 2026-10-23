@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How it works · In-ear EEG classifier</title>
+  <meta name="description" content="The research, model, preprocessing and limits behind the in-browser in-ear EEG classifier." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="eeg.css" />
+</head>
+<body class="doc">
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12h4l2-6 3 12 3-9 2 3h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      In-ear EEG classifier
+    </a>
+    <nav class="topnav">
+      <a href="index.html">Open the app</a>
+      <a href="../index.html">Milan Tichavský</a>
+    </nav>
+  </header>
+
+  <main class="article">
+    <img class="cover" src="thumb.jpg" width="640" height="360" alt="Oil painting of a sea at dusk whose ripples are EEG traces" />
+
+    <h1>How the in-ear EEG classifier works</h1>
+    <p class="lede">
+      The classifier comes out of my master's thesis on detecting anxiety and depression from EEG,
+      and the paper that grew from it. It takes a resting-state recording from a single in-ear
+      electrode and says whether it looks more like the healthy or the pathological group in the
+      training data. This page covers what that means, how well it works and where it doesn't.
+    </p>
+
+    <h2>Using it</h2>
+    <ol>
+      <li>Record resting-state EEG with an IDUN Guardian in-ear device, ideally a few minutes with eyes closed or open.</li>
+      <li>Export the recording as CSV. The app reads the <code>ch1</code> column, sampled at 250 Hz.</li>
+      <li>Drop the file onto the <a href="index.html">app</a>. The recording is split into 10-second segments, each segment is classified, and the majority vote is the output.</li>
+    </ol>
+
+    <h2>The research</h2>
+    <p>
+      Master's thesis, Faculty of Information Technology, Brno University of Technology (2026), and
+      the manuscript <em>Detecting Anxiety and Depression from In-Ear and Eight-Channel EEG Using
+      Deep Learning: A Multi-Dataset Study</em>, which is not yet published.
+    </p>
+    <p>
+      The study combines three resting-state datasets into one corpus of 169 subjects:
+      people with depression, people with anxiety, people with both, and healthy controls. It then
+      compares eight-channel models with models that see a single in-ear channel. Its main finding
+      is that one in-ear channel loses little against eight scalp electrodes. The code is on
+      <a href="https://github.com/mtichavsky/eeg">GitHub</a>.
+    </p>
+
+    <h2 id="model">The model</h2>
+    <p>
+      The app runs <strong>CNN-AttnS</strong>, the best in-ear model in the paper. It has 79 K
+      parameters. Two convolutional layers turn a segment's spectrogram into ten time steps, and a
+      single self-attention layer looks across them before a small classifier decides between
+      healthy and pathological (depression, anxiety or both).
+    </p>
+    <p>
+      The paper evaluates it with 10-fold, subject-independent cross-validation: ten models, each
+      tested on subjects it never saw in training. The paper reports their average. A web page
+      needs one model, so this one runs <strong>fold 5</strong>:
+    </p>
+    <table>
+      <thead><tr><th></th><th>Paper (mean ± std, 10 folds)</th><th>Fold 5 (this app)</th></tr></thead>
+      <tbody>
+        <tr><td>Segment accuracy</td><td>77.0 ± 4.6%</td><td>79.5%</td></tr>
+        <tr><td>Recording accuracy (majority vote)</td><td>79.2 ± 5.8%</td><td>83.3%</td></tr>
+        <tr><td>Sensitivity (pathological found)</td><td>79.9 ± 8.5%</td><td>81.6%</td></tr>
+        <tr><td>Specificity (healthy found)</td><td>72.8 ± 9.0%</td><td>77.2%</td></tr>
+        <tr><td>Best training epoch</td><td></td><td>36 of 56</td></tr>
+      </tbody>
+    </table>
+    <p>Fold 5 was picked over the others because:</p>
+    <ul>
+      <li>It trained properly. Two folds reached their best validation score in the first few epochs (2 and 6), which says more about luck than learning.</li>
+      <li>It keeps the paper's trade-off: somewhat more sensitive than specific. The fold closest to the average overall, fold 3, reverses it.</li>
+      <li>Every metric is within 0.7 standard deviations of the paper's average.</li>
+    </ul>
+    <p>
+      Fold 5's numbers come from its 727 held-out segments and sit slightly above average, so the
+      paper's average is the better guide to what to expect.
+    </p>
+
+    <h2>What happens to your recording</h2>
+    <ol>
+      <li>The whole signal is z-scored and linearly detrended.</li>
+      <li>A 4th-order Butterworth band-pass keeps 1–70 Hz, and a notch filter removes 50 Hz mains hum.</li>
+      <li>It is cut into non-overlapping 10-second segments. A shorter tail is dropped. Each segment is z-scored again.</li>
+      <li>Each segment becomes a log-magnitude spectrogram: 256-sample Hamming windows with 192 samples of overlap, 0–70 Hz, 72 × 41 values. This is what the app draws.</li>
+      <li>The network classifies each segment, and the class with the most segments is the output.</li>
+    </ol>
+    <p>
+      Every step is a JavaScript port of the thesis code in Python. Automated tests compare each
+      stage, and the network's outputs, against the Python version on the same input. The network
+      runs with ONNX Runtime Web on WebAssembly.
+    </p>
+
+    <h2 id="limits">Limits</h2>
+    <p class="callout"><strong>This is a research prototype, not a medical device.</strong> Its output is not a diagnosis and must not be used to make decisions about anyone's health.</p>
+    <ul>
+      <li>It was trained on 169 subjects from research datasets and has never been validated clinically.</li>
+      <li>Most training data was a surrogate in-ear channel computed from scalp electrodes (T8 − T7). On genuine IDUN in-ear recordings, the kind the app accepts, cross-validated segment accuracy was about 67%, and only about half of the healthy segments were recognised as healthy.</li>
+      <li>"Pathological" means resembling the depression and anxiety groups in these datasets. It does not distinguish between the two.</li>
+      <li>Training discarded segments with a low IDUN signal-quality score. The app has no quality file, so noisy segments are classified anyway.</li>
+      <li>Other devices, other sampling rates or recordings with heavy movement give meaningless output.</li>
+    </ul>
+
+    <h2>Privacy</h2>
+    <p>
+      Your recording never leaves your device: the file is read, filtered and classified inside the
+      browser tab, and nothing is uploaded or stored. The site has no analytics. The only outside
+      request is for the typeface, from Google Fonts.
+    </p>
+
+    <a class="btn-primary" href="index.html">Open the classifier</a>
+  </main>
+</body>
+</html>
