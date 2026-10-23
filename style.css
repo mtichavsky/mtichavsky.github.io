@@ -92,7 +92,6 @@ section .wrap { text-align: center; }
 /* ── Hero ── */
 .hero {
   padding: 5rem 0 4rem;
-  border-bottom: 1px solid var(--rule);
 
   opacity: 0;
   transform: translateY(16px);
@@ -208,7 +207,6 @@ h1 em {
 /* ── Sections ── */
 section {
   padding: 4rem 0;
-  border-bottom: 1px solid var(--rule);
 }
 
 h2 {
