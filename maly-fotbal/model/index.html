@@ -37,7 +37,7 @@ i když je v soutěži nový.</p>
 <h2 class="title">Model gólů</h2>
 <div class="formula">očekávané góly = základ × útok týmu × obrana soupeře × domácí prostředí</div>
 <div class="facts">
-<div class="fact"><b>−3 %</b><span>góly za domácí prostředí</span></div>
+<div class="fact"><b>+5 %</b><span>góly za domácí prostředí</span></div>
 <div class="fact"><b>10 %</b><span>rozdíl gólů mezi sousedními ligami</span></div>
 <div class="fact"><b>243</b><span>přechodů týmů mezi sezónami v datech</span></div></div>
 <p>Síla týmů se odhaduje z letošních zápasů, ale <strong>stahuje se k výchozímu odhadu</strong> (ridge regrese).
@@ -58,12 +58,12 @@ odhad: 40 % pro postupující tým a 55 % pro záchranu.</p>
 dříve. Nastavení jsem ladil na sezónách 2022/23 a 2023/24 a ověřil na 913 zápasech let 2024/25 až 2026/27,
 které ladění nikdy neviděly. Log-loss (nižší je lepší): tento model 0,874, původní verze
 0,897, prosté sazby výhra/remíza/prohra 0,967.</p>
-<p>Letošní sezóna stejným způsobem (44 zápasů):</p>
+<p>Letošní sezóna stejným způsobem (48 zápasů):</p>
 <div class="mf-card mini"><table class="mf">
 <tr><th class=l>Model<th>Log-loss<th>Brier<th>Trefený výsledek</tr>
-<tr><td class=l>Tento model<td>0,850<td>0,506<td>59 %</tr>
-<tr><td class=l>Totéž bez minulých sezón<td>0,845<td>0,502<td>66 %</tr>
-<tr><td class=l>Základ: průměrné sazby lig<td>0,910<td>0,567<td>41 %</tr></table></div>
+<tr><td class=l>Tento model<td>0,877<td>0,529<td>56 %</tr>
+<tr><td class=l>Totéž bez minulých sezón<td>0,873<td>0,525<td>62 %</tr>
+<tr><td class=l>Základ: průměrné sazby lig<td>0,902<td>0,562<td>44 %</tr></table></div>
 <div class="callout">Model je výrazně lepší než prosté sazby výhra/remíza/prohra. Letos zatím minulé sezóny měřitelně nepomáhají, ale letošních zápasů je na takové srovnání málo; v minulých sezónách pomáhaly hlavně v prvních kolech. Vzorek je malý, takže pořadí berte jako kvalifikovaný odhad, ne jistotu.</div>
 
 <h2 class="title">Co model neumí</h2>
